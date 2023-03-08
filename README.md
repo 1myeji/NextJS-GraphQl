@@ -1,1 +1,1 @@
-인프런 강의 중 코드 
+NextJS, GraphQl 
