@@ -1,6 +1,6 @@
 import '../styles/globals.css';
+import type { AppProps } from 'next/app';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import { AppProps } from 'next/app';
 
 export default function App({ Component }: AppProps) {
   const client = new ApolloClient({
