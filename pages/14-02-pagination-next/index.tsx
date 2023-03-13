@@ -13,27 +13,28 @@ const FETCH_BOARDS = gql`
   }
 `;
 export default function StaticRoutedPage() {
-  const [startPage, setStartPage] = useState(1)
+  const [startPage, setStartPage] = useState(1);
 
-  const { data, refetch } = useQuery<Pick<IQuery, "fetchBoards">, IQueryFetchBoardsArgs>(FETCH_BOARDS); 
+  const { data, refetch } = useQuery<Pick<IQuery, "fetchBoards">, IQueryFetchBoardsArgs>(FETCH_BOARDS);
 
   const onClickPage = (event: MouseEvent<HTMLSpanElement>) => {
-    void refetch({page: Number(event.currentTarget.id) })
-  }
+    void refetch({ page: Number(event.currentTarget.id) });
+  };
 
   const onClickPrevPage = () => {
-    setStartPage(startPage - 10)
-    void refetch({page: startPage - 10})
-  }
+    setStartPage(startPage - 10);
+    void refetch({ page: startPage - 10 });
+  };
 
   const onClickNextPage = () => {
-    setStartPage(startPage + 10)
-    void refetch({page: startPage + 10})
-  }
+    setStartPage(startPage + 10);
+    void refetch({ page: startPage + 10 });
+  };
 
   return (
     <>
-      {data?.fetchBoards.map(el => {  // el에 빨간줄이 뜰텐데 fetchBoards에 type을 지정해주면 됩니다.
+      {data?.fetchBoards.map(el => {
+        // el에 빨간줄이 뜰텐데 fetchBoards에 type을 지정해주면 됩니다.
         return (
           <div key={el._id}>
             <span style={{ margin: "10px" }}>{el.writer}</span>
@@ -43,9 +44,16 @@ export default function StaticRoutedPage() {
       })}
 
       <span onClick={onClickPrevPage}>이전페이지</span>
-      {new Array(10).fill(1).map((_, index) => ( // _ data 값을 안 쓴다는 의미
-        <span key={index + startPage} id={String(index + startPage)} onClick={onClickPage} style={{margin: '10px'}}>{index + startPage}</span> // id는 숫자가 못들어감
-      ))}
+      {new Array(10).fill(1).map(
+        (
+          _,
+          index, // _ data 값을 안 쓴다는 의미
+        ) => (
+          <span key={index + startPage} id={String(index + startPage)} onClick={onClickPage} style={{ margin: "10px" }}>
+            {index + startPage}
+          </span> // id는 숫자가 못들어감
+        ),
+      )}
       <span onClick={onClickNextPage}>다음페이지</span>
 
       {/* {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, index) => ( // _ data 값을 안 쓴다는 의미
