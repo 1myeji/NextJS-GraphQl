@@ -1,6 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 import { MouseEvent, useState } from "react";
 import { IQuery, IQueryFetchBoardsArgs, IQueryFetchBoardsCountArgs } from "../../src/commons/types/generated/types";
+import PaginationPage from "../../src/components/commons/pagination";
+import FetchBoardsElement from "../../src/components/units/14-pagination-last";
 
 const FETCH_BOARDS = gql`
   query fetchBoards($page: Int) {
@@ -46,37 +48,15 @@ export default function StaticRoutedPage() {
 
   return (
     <>
-      {data?.fetchBoards.map(el => {
-        // el에 빨간줄이 뜰텐데 fetchBoards에 type을 지정해주면 됩니다.
-        return (
-          <div key={el._id}>
-            <span style={{ margin: "10px" }}>{el.writer}</span>
-            <span style={{ margin: "10px" }}>{el.title}</span>
-          </div>
-        );
-      })}
+      <FetchBoardsElement data={data} />
 
-      <span onClick={onClickPrevPage}>이전페이지</span>
-      {new Array(10).fill(1).map(
-        (
-          _,
-          index, // _ data 값을 안 쓴다는 의미
-        ) => {
-          return (
-            index + startPage <= lastPage && (
-              <span
-                key={index + startPage}
-                id={String(index + startPage)}
-                onClick={onClickPage}
-                style={{ margin: "10px" }}
-              >
-                {index + startPage}
-              </span>
-            ) // id는 숫자가 못들어감
-          );
-        },
-      )}
-      <span onClick={onClickNextPage}>다음페이지</span>
+      <PaginationPage
+        onClickPrevPage={onClickPrevPage}
+        onClickNextPage={onClickNextPage}
+        startPage={startPage}
+        lastPage={lastPage}
+        onClickPage={onClickPage}
+      />
 
       {/* <span onClick={onClickPrevPage}>이전페이지</span>
       {new Array(10).fill(1).map(
